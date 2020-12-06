@@ -20,7 +20,5 @@ def scrape():
    mars.update({}, mars_data, upsert=True)
    return "Scraping Successful!"
 
-.update(query_parameter, data, options)
-
 if __name__ == "__main__":
    app.run()
