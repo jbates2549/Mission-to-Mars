@@ -6,6 +6,16 @@ import datetime as dt
 #from webdriver_manager.chrome import ChromeDriverManager
 
 
+
+
+from selenium import webdriver
+from webdriver_manager.chrome import ChromeDriverManager
+
+driver = webdriver.Chrome(ChromeDriverManager().install())
+
+#executable_path = {'executable_path': ChromeDriverManager().install()}
+#browser = Browser('chrome', **executable_path, headless=False)
+
 def scrape_all():
     # Initiate headless driver for deployment
     browser = Browser("chrome", executable_path="chromedriver", headless=True)
@@ -19,11 +29,6 @@ def scrape_all():
         "featured_image": featured_image(browser),
         "facts": mars_facts(),
         "last_modified": dt.datetime.now()
-    }
-
-    hemispheres = {
-        "img_url": img_url,
-        "title": title,
     }
 
     # Stop webdriver and return data
@@ -112,25 +117,5 @@ if __name__ == "__main__":
     print(scrape_all())
 
 
-def hemispheres():
-    # Add try/except for error handling
-    try:
-        # Use 'read_html' to scrape the facts table into a dataframe
-        df = pd.read_html('https://astrogeology.usgs.gov/search/results?q=hemisphere+enhanced&k1=target&v1=Mars')[0]
-
-    except BaseException:
-        return None
-
-    # Assign columns and set index of dataframe
-    df.columns=['img_url', 'title']
-    df.set_index('img_url', inplace=True)
-
-    # Convert dataframe into HTML format, add bootstrap
-    return df.to_html(classes="table table-striped")
-
-if __name__ == "__main__":
-
-    # If running as script, print scraped data
-    print(scrape_all())
-
+         
 
